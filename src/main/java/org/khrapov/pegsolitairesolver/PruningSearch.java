@@ -79,7 +79,7 @@ public class PruningSearch {
             return;
         }
 
-        if(children.size() > pruningThreshold) {
+        if(pruningThreshold > 0 && children.size() > pruningThreshold) {
             Collections.sort(children, new BoardComparator());
             List<BoardState> children2 = new ArrayList<BoardState>();
             for(int i = 0; i < pruningThreshold; i++) {

@@ -20,9 +20,9 @@ public class BoardState {
     // may also be used by in package unit tests.
     BoardState(BoardConfig bc, int x, int y)
     {
-        if(x < 5 || y < 5 || x*y > 64)
+        if(x < 4 || y < 4 || x*y > 64)
         {
-            throw new RuntimeException("Board dimentions may not be smaller than 5 " +
+            throw new RuntimeException("Board dimentions may not be smaller than 4 " +
                 "or board size may not be larger than 64 cells.");
         }
 
