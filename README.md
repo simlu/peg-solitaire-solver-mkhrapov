@@ -6,7 +6,7 @@ Master: [![Build Status](https://travis-ci.org/mkhrapov/peg-solitaire-solver.svg
 
 Peg Solitaire is an old and very well known board game for one player.
 The board is composed of holes filled in with pegs. The initial position
-typically is one hole missing a peg (often in the center of the board, but not necessarily).
+is one hole without a peg (often in the center of the board, but not necessarily).
 A move is for a peg to jump over a neighbouring peg into a hole, horizontally or vertically.
 The peg being jumped over is removed from the board. The goal of the game is to remove all
 the pegs from the board except one. Ideally the last peg should end up in the same hole
