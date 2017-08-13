@@ -157,25 +157,26 @@ public class PruningSearchTest {
         }
     }
 
-/*
+
     @Test
-    public void pruningNumberZeroIsUnlimited()
+    public void solve6x4Board()
     {
         BoardConfig boardConfig = new BoardConfig(4, 6);
         boardConfig.setAllowedPositions(
             new int[] {
-                1, 1, 1, 1, 1, 1,
-                1, 1, 1, 1, 1, 1,
-                1, 1, 1, 1, 1, 1,
-                1, 1, 1, 1, 1, 1
+                1, 1, 1, 1,
+                1, 1, 1, 1,
+                1, 1, 1, 1,
+                1, 1, 1, 1,
+                1, 1, 1, 1,
+                1, 1, 1, 1
             }
         );
 
         BoardState boardState = boardConfig.initialState(1, 1);
         PruningSearch pruningSearch = new PruningSearch(boardState);
 
-        // Zero means no pruning
-        pruningSearch.prune(0);
+        pruningSearch.prune(5);
         int solutions = pruningSearch.search();
         if(solutions > 0)
         {
@@ -190,5 +191,4 @@ public class PruningSearchTest {
             fail("Solution to 4x6 board has not been found");
         }
     }
-    */
 }

@@ -67,6 +67,7 @@ public class BoardConfig {
 
     void discoverSymmetry() {
         Board b = new Board(sizeX, sizeY, allowedPositions);
+
         if(b.equals(b.verticalFlip()))
         {
             verticalFlip = true;
@@ -77,29 +78,28 @@ public class BoardConfig {
             horizontalFlip = true;
         }
 
-        if(b.equals(b.leftDiagonalFlip()))
-        {
-            leftDiagonalFlip = true;
-        }
-
-        if(b.equals(b.rightDiagonalFlip()))
-        {
-            rightDiagonalFlip = true;
-        }
-
-        if(b.equals(b.rotate90()))
-        {
-            rotate90 = true;
-        }
-
         if(b.equals(b.rotate180()))
         {
             rotate180 = true;
         }
 
-        if(b.equals(b.rotate270()))
+        if(sizeX == sizeY)
         {
-            rotate270 = true;
+            if (b.equals(b.leftDiagonalFlip())) {
+                leftDiagonalFlip = true;
+            }
+
+            if (b.equals(b.rightDiagonalFlip())) {
+                rightDiagonalFlip = true;
+            }
+
+            if (b.equals(b.rotate90())) {
+                rotate90 = true;
+            }
+
+            if (b.equals(b.rotate270())) {
+                rotate270 = true;
+            }
         }
     }
 

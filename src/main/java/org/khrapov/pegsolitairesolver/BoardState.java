@@ -39,7 +39,7 @@ public class BoardState {
     // private pseudo constructor. To be used by the children method
     private BoardState beget(int x1, int y1, int x2, int y2, int x3, int y3)
     {
-        BoardState bs = new BoardState(boardConfig, sizeX, sizeX);
+        BoardState bs = new BoardState(boardConfig, sizeX, sizeY);
         for(int i = 0; i < occupiedPositions.length; i++)
         {
             bs.setPosition(i, occupiedPositions[i]);
@@ -70,6 +70,12 @@ public class BoardState {
 
     boolean isFinal()
     {
+        return numOccupiedPositions() == 1;
+    }
+
+
+    int numOccupiedPositions()
+    {
         int counter = 0;
 
         for(int i = 0; i < occupiedPositions.length; i++)
@@ -80,7 +86,7 @@ public class BoardState {
             }
         }
 
-        return counter == 1;
+        return counter;
     }
 
 
@@ -197,26 +203,60 @@ public class BoardState {
     {
         List<BoardState> lb = new ArrayList<BoardState>();
 
+        int n = numOccupiedPositions();
+
         for(int i = 0; i < boardSize; i++) {
             if(boardConfig.positionAllowed(i)) {
                 if(occupiedPositions[i]) {
                     int x = i % sizeX;
-                    int y = i / sizeY;
+                    int y = i / sizeX;
 
                     if(isValidMove(x, y+1, x, y+2)) {
-                        lb.add(beget(x, y, x, y+1, x, y+2));
+                        BoardState child = beget(x, y, x, y+1, x, y+2);
+                        if(child.numOccupiedPositions() != n - 1)
+                        {
+                            System.out.println(String.format("i: %d x: %d y: %d %n", i, x, y));
+                            display("Parent");
+                            child.display("Child");
+                            throw new RuntimeException("y+");
+                        }
+                        lb.add(child);
                     }
 
                     if(isValidMove(x, y-1, x, y-2)) {
-                        lb.add(beget(x, y, x, y-1, x, y-2));
+                        BoardState child = beget(x, y, x, y-1, x, y-2);
+                        if(child.numOccupiedPositions() != n - 1)
+                        {
+                            System.out.println(String.format("i: %d x: %d y: %d %n", i, x, y));
+                            display("Parent");
+                            child.display("Child");
+                            throw new RuntimeException("y-");
+                        }
+                        lb.add(child);
                     }
 
                     if(isValidMove(x+1, y, x+2, y)) {
-                        lb.add(beget(x, y, x+1, y, x+2, y));
+                        BoardState child = beget(x, y, x+1, y, x+2, y);
+                        if(child.numOccupiedPositions() != n - 1)
+                        {
+                            System.out.println(String.format("i: %d x: %d y: %d %n", i, x, y));
+                            display("Parent");
+                            child.display("Child");
+                            throw new RuntimeException("x+");
+                        }
+                        lb.add(child);
                     }
 
                     if(isValidMove(x-1, y, x-2, y)) {
-                        lb.add(beget(x, y, x-1, y, x-2, y));
+                        BoardState child = beget(x, y, x-1, y, x-2, y);
+                        if(child.numOccupiedPositions() != n - 1)
+                        {
+                            System.out.println(String.format("i: %d x: %d y: %d %n", i, x, y));
+                            display("Parent");
+                            child.display("Child");
+                            throw new RuntimeException("x-");
+                        }
+                        lb.add(child);
                     }
                 }
             }
@@ -274,5 +314,34 @@ public class BoardState {
         }
 
         return sb.toString();
+    }
+
+    void display(String header)
+    {
+        System.out.println("============== " + header + " ==================");
+        for(int y = 0; y < sizeY; y++)
+        {
+            for(int x = 0; x < sizeX; x++)
+            {
+                int i = y*sizeX + x;
+                if(boardConfig.positionAllowed(i))
+                {
+                    if(occupiedPositions[i] == true)
+                    {
+                        System.out.print(" 1");
+                    }
+                    else
+                    {
+                        System.out.print(" 0");
+                    }
+                }
+                else
+                {
+                    System.out.print("  ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("====================================================");
     }
 }

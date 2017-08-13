@@ -11,6 +11,7 @@ public class PruningSearch {
     private int pruningThreshold = 10000;
     private int numSolutions = 0;
     private List<BoardState> solutions;
+    private int generation;
 
 
     public PruningSearch(BoardState boardState)
@@ -28,10 +29,11 @@ public class PruningSearch {
 
     public int search()
     {
-        List<BoardState> gen0 = new ArrayList<BoardState>();
-        gen0.add(initialBoardState);
+        List<BoardState> gen1 = new ArrayList<BoardState>();
+        gen1.add(initialBoardState);
 
-        searchByGeneration(gen0);
+        generation = 1;
+        searchByGeneration(gen1);
         return getNumSolutions();
     }
 
@@ -50,6 +52,10 @@ public class PruningSearch {
 
     void searchByGeneration(List<BoardState> currentGen)
     {
+        //System.out.print(String.format("Generation: %d Size: %d %n", generation,
+        //    currentGen.size()));
+        generation++;
+
         if(currentGen.size() == 0)
         {
             return;
@@ -68,11 +74,15 @@ public class PruningSearch {
         }
 
         for(BoardState b : children) {
+            int i = b.numOccupiedPositions();
+            //System.out.print(String.format(" %d", i));
+
             if(b.isFinal()) {
                 numSolutions++;
                 solutions.add(b);
             }
         }
+        //System.out.println();
 
         if(numSolutions > 0)
         {
