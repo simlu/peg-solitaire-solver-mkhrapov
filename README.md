@@ -51,9 +51,11 @@ and rerun the search.
 To use this library in your own programs you will need to install it into a local Maven repo.
 Source JAR and Javadoc JAR files will be included.
 
-> git clone https://github.com/mkhrapov/peg-solitaire-solver.git
-> cd peg-solitaire-solver
-> mvn install
+```
+git clone https://github.com/mkhrapov/peg-solitaire-solver.git
+cd peg-solitaire-solver
+mvn install
+```
 
 Then add the dependency to the Maven POM file.
 
