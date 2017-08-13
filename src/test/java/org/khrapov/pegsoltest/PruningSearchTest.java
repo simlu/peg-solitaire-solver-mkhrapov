@@ -25,9 +25,10 @@ public class PruningSearchTest {
 
         BoardState boardState = boardConfig.initialState(3, 3);
         PruningSearch pruningSearch = new PruningSearch(boardState);
+        pruningSearch.setDebug(true);
 
         // minimum pruning number with which this search can
-        // find a solution
+        // find a solution is 10
         pruningSearch.prune(10);
         int solutions = pruningSearch.search();
         if(solutions > 0)

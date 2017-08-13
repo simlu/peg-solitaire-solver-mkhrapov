@@ -12,6 +12,7 @@ public class PruningSearch {
     private int numSolutions = 0;
     private List<BoardState> solutions;
     private int generation;
+    private boolean DEBUG = false;
 
 
     public PruningSearch(BoardState boardState)
@@ -43,6 +44,11 @@ public class PruningSearch {
         return numSolutions;
     }
 
+    public void setDebug(boolean dbg)
+    {
+        DEBUG = dbg;
+    }
+
 
     public String getSolution(int id)
     {
@@ -52,14 +58,29 @@ public class PruningSearch {
 
     void searchByGeneration(List<BoardState> currentGen)
     {
-        //System.out.print(String.format("Generation: %d Size: %d %n", generation,
-        //    currentGen.size()));
+        if(DEBUG)
+        {
+            System.out.print(String.format("Generation: %d Size: %d %n", generation,
+                currentGen.size()));
+        }
+
         generation++;
 
         if(currentGen.size() == 0)
         {
             return;
         }
+
+        // Is TreeSet or a HashSet faster?
+        // I ran a performance test where I tried to solve
+        // the English board with the pruning number
+        // set to 10_000.
+        // TreeSet took 25 sec.
+        // HashSet took 25 sec.
+        // I think it is highly unlikely that the two libraries
+        // have literally identical performance.
+        // I think most likely this result means that
+        // this part of the code is not a bottle neck.
 
         Set<Long> dedup = new TreeSet<Long>();
         List<BoardState> children = new ArrayList<BoardState>();
@@ -74,15 +95,11 @@ public class PruningSearch {
         }
 
         for(BoardState b : children) {
-            int i = b.numOccupiedPositions();
-            //System.out.print(String.format(" %d", i));
-
             if(b.isFinal()) {
                 numSolutions++;
                 solutions.add(b);
             }
         }
-        //System.out.println();
 
         if(numSolutions > 0)
         {
