@@ -1,5 +1,12 @@
 package org.khrapov.pegsolitairesolver;
 
+
+/**
+ * BoardConfig represents the geometry of a particular Peg Solitaire board.
+ * The representation is a rectangular array X by Y in dimension. The places
+ * in the array that have a hole that can by occupied by a peg are marked
+ * with 1s and the disallowed positions are marked with 0s.
+ */
 public class BoardConfig {
     private int sizeX;
     private int sizeY;
@@ -15,6 +22,11 @@ public class BoardConfig {
     private boolean rotate270 = false;
 
 
+    /**
+     * Set the dimentions of the array.
+     * @param x - horizontal dimension (changes the fastest)
+     * @param y - vertical dimension
+     */
     public BoardConfig(int x, int y) {
         if (x < 4 || y < 4 || x * y > 64) {
             throw new RuntimeException("Board dimentions may not be smaller than 4 " +
@@ -28,6 +40,11 @@ public class BoardConfig {
     }
 
 
+    /**
+     * Mark the positions with holes by 1s.
+     * @param allowedPositions - unwrapped one-dimensional array with holes marked by 1s. X
+     *                         coordinate changes the fastest.
+     */
     public void setAllowedPositions(int[] allowedPositions) {
         if (allowedPositions.length != this.allowedPositions.length) {
             throw new RuntimeException("array size mismatch");
@@ -43,6 +60,12 @@ public class BoardConfig {
     }
 
 
+    /**
+     * Create the initial position of the game by marking the hole that will have no peg.
+     * @param x - horizontal coordinate of the hole with no peg.
+     * @param y - vertical coordinate of the hole with no peg.
+     * @return - Initial BoardState from which to start the search.
+     */
     public BoardState initialState(int x, int y) {
         BoardState boardState = new BoardState(this, sizeX, sizeY);
 

@@ -6,15 +6,25 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Class PruningSearch encapsulates the pruning search algorithm of this Peg Solitaire solver.
+ */
 public class PruningSearch {
     private BoardState initialBoardState;
-    private int pruningThreshold = 10000;
+    private int pruningNumber = 10000;
     private int numSolutions = 0;
     private List<BoardState> solutions;
     private int generation;
     private boolean DEBUG = false;
 
 
+    /**
+     * Constructore takes the initial BoardState from which to conduct the search.
+     * Each BoardState instance contains a reference to the BoardConfig object that
+     * describes the Board we are searching, so no additional information is necessary.
+     *
+     * @param boardState initial Board State from which we will conduct the search.
+     */
     public PruningSearch(BoardState boardState)
     {
         initialBoardState = boardState;
@@ -22,12 +32,41 @@ public class PruningSearch {
     }
 
 
+    /**
+     * <p>This method sets the <code>pruningNumber</code>. It is not necessary
+     * to call this as the default is preset to 10000. This default, however,
+     * is very lax and in most cases a much smaller value will allow to solve a
+     * board. This value also affects greatly how long the search will take. It is
+     * thus recommended to set an initial low <code>pruningNumber</code> (e.g. &lt; 50)
+     * and if this turns out to be too aggressive and no solution is found, then increase it
+     * gradually until the board is solved.
+     * </p>
+     *
+     * <p>
+     * Setting this to 0 (zero) will disable the pruning. In such a case the full search
+     * tree is examined.
+     * </p>
+     *
+     * <p>
+     * Approximate runtimes with different pruning numbers:<br>
+     * 10 - milliseconds<br>
+     * 10000 - seconds<br>
+     * 0 - hours
+     * </p>
+     *
+     * @param prune Sets the desired pruning number.
+     */
     public void prune(int prune)
     {
-        pruningThreshold = prune;
+        pruningNumber = prune;
     }
 
 
+    /**
+     * Initiates search.
+     *
+     * @return number of solutions found. If 0 (zero) no solutions have been found.
+     */
     public int search()
     {
         List<BoardState> gen1 = new ArrayList<BoardState>();
@@ -39,19 +78,42 @@ public class PruningSearch {
     }
 
 
+    /**
+     * Returns the number of found solutions. Prior to calling <code>search</code>
+     * method this number would always be zero.
+     *
+     * @return returns the number of found solutions.
+     */
     public int getNumSolutions()
     {
         return numSolutions;
     }
 
+
+    /**
+     * If set to true, extra debugging info will be output to STDOUT.
+     *
+     * @param dbg boolean enable or disable outputting extra debugging info
+     */
     public void setDebug(boolean dbg)
     {
         DEBUG = dbg;
     }
 
 
+    /**
+     * Return a particular solution from the list of solutions. May return NULL if
+     * id is illegal.
+     *
+     * @param id return consecutively numbered solution
+     * @return String solution represented as a String.
+     */
     public String getSolution(int id)
     {
+        if(id >= solutions.size() || id < 0)
+        {
+            return null;
+        }
         return solutions.get(id).getHistory();
     }
 
@@ -106,10 +168,10 @@ public class PruningSearch {
             return;
         }
 
-        if(pruningThreshold > 0 && children.size() > pruningThreshold) {
+        if(pruningNumber > 0 && children.size() > pruningNumber) {
             Collections.sort(children, new BoardComparator());
             List<BoardState> children2 = new ArrayList<BoardState>();
-            for(int i = 0; i < pruningThreshold; i++) {
+            for(int i = 0; i < pruningNumber; i++) {
                 children2.add(children.get(i));
             }
             children = children2;

@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * BoardState class represents the state of the Peg Solitaire board
+ * at any particular step during the game.
+ *
+ * There is no public constructor. The initial BoardState is constructed
+ * by the BoardConfig class.
+ */
 public class BoardState {
     private int sizeX;
     private int sizeY;
@@ -199,7 +206,7 @@ public class BoardState {
     }
 
 
-    public List<BoardState> children()
+    List<BoardState> children()
     {
         List<BoardState> lb = new ArrayList<BoardState>();
 
@@ -305,7 +312,7 @@ public class BoardState {
         history.add(String.format("[%d, %d, %d, %d],%n", x1, y1, x2, y2));
     }
 
-    public String getHistory()
+    String getHistory()
     {
         StringBuilder sb = new StringBuilder();
         for(String s : history)
