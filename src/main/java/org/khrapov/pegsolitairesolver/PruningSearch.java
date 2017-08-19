@@ -12,7 +12,6 @@ import java.util.TreeSet;
 public class PruningSearch {
     private BoardState initialBoardState;
     private int pruningNumber = 10000;
-    private int numSolutions = 0;
     private List<BoardState> solutions;
     private int generation;
     private boolean DEBUG = false;
@@ -86,7 +85,14 @@ public class PruningSearch {
      */
     public int getNumSolutions()
     {
-        return numSolutions;
+        if(solutions != null)
+        {
+            return solutions.size();
+        }
+        else
+        {
+            return 0;
+        }
     }
 
 
@@ -103,13 +109,18 @@ public class PruningSearch {
 
     /**
      * Return a particular solution from the list of solutions. May return NULL if
-     * id is illegal.
+     * properUniqueID is illegal.
      *
      * @param id return consecutively numbered solution
      * @return String solution represented as a String.
      */
     public String getSolution(int id)
     {
+        if(solutions == null)
+        {
+            return null;
+        }
+
         if(id >= solutions.size() || id < 0)
         {
             return null;
@@ -158,12 +169,11 @@ public class PruningSearch {
 
         for(BoardState b : children) {
             if(b.isFinal()) {
-                numSolutions++;
                 solutions.add(b);
             }
         }
 
-        if(numSolutions > 0)
+        if(solutions != null && solutions.size() > 0)
         {
             return;
         }

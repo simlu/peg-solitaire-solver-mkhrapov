@@ -62,7 +62,7 @@ class Board {
     @Override
     public int hashCode()
     {
-        return (int) id();
+        return (int) properUniqueID();
     }
 
 
@@ -256,7 +256,14 @@ class Board {
     }
 
 
-    long id() {
+    /**
+     * Unique own properUniqueID for this Board position. A different
+     * board position that can be converted to this position via a
+     * symmetry operation will have a different properUniqueID.
+     *
+     * @return long
+     */
+    long properUniqueID() {
         long hash = 0L;
         for(int i = 0; i < boardSize; i++) {
             if(pos[i]) {

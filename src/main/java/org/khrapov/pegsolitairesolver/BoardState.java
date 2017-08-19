@@ -101,7 +101,7 @@ public class BoardState {
     {
         if(boardID == 0)
         {
-            boardID = calculateID();
+            boardID = calculateSymmetryNormalizedID();
         }
 
         return boardID;
@@ -119,6 +119,21 @@ public class BoardState {
     }
 
 
+    /**
+     * This function is critical to the speed of the solver. It calculates
+     * the heuristic value that allows an aggressive pruning of the search tree.
+     *
+     * The idea came from my manual solving of the peg solitaire puzzles. It
+     * appeared that the more compact boards are more likely to produce a solution.
+     *
+     * To quantify compactness I calculate the length of the border of the position.
+     * If an occupied cell is next to an empty cell on any side, a 1 is added to
+     * the length of the border.
+     *
+     * @return int measure of the board position's border length. The longer the border's
+     * length, the less likely the position is to yield a solution. Shorter border
+     * means more compact position, that is more likely to produce a solution.
+     */
     int calculateScore()
     {
         int score = 0;
@@ -161,45 +176,60 @@ public class BoardState {
     }
 
 
-    long calculateID()
+    /**
+     * This function is used to help deduplicate a set of Board
+     * positions. This ID is calculated with respect to symmetry.
+     * Not only will 2 identical positions have the same ID, but
+     * also 2 positions that can be converted into each other via
+     * a symmetry operation allowed for this Board.
+     *
+     * This ID is normalized with respect to symmetry by calculating
+     * the properUniqueIDs for this board position as well as all board
+     * positions that can be converted into this position via an allowed
+     * symmetry operation and then taking the smallest value.
+     *
+     * @return 64-bit integer unique for a set of symmetry
+     * equivalent board positions.
+     */
+    long calculateSymmetryNormalizedID()
     {
         Board b = new Board(sizeX, sizeY, occupiedPositions);
         List<Long> l = new ArrayList<Long>();
-        l.add(b.id());
+        l.add(b.properUniqueID());
 
         if(boardConfig.isHorizontalFlip())
         {
-            l.add(b.horizontalFlip().id());
+            l.add(b.horizontalFlip().properUniqueID());
         }
 
         if(boardConfig.isVerticalFlip())
         {
-            l.add(b.verticalFlip().id());
+            l.add(b.verticalFlip().properUniqueID());
         }
 
         if(boardConfig.isLeftDiagonalFlip())
         {
-            l.add(b.leftDiagonalFlip().id());
+            l.add(b.leftDiagonalFlip().properUniqueID());
         }
 
         if(boardConfig.isRightDiagonalFlip())
         {
-            l.add(b.rightDiagonalFlip().id());
+            l.add(b.rightDiagonalFlip().properUniqueID());
         }
 
         if(boardConfig.isRotate90())
         {
-            l.add(b.rotate90().id());
+            l.add(b.rotate90().properUniqueID());
         }
 
         if(boardConfig.isRotate180())
         {
-            l.add(b.rotate180().id());
+            l.add(b.rotate180().properUniqueID());
         }
 
         if(boardConfig.isRotate270())
         {
-            l.add(b.rotate270().id());
+            l.add(b.rotate270().properUniqueID());
         }
 
         return Collections.min(l);
@@ -299,12 +329,7 @@ public class BoardState {
 
 
     List<String> historyCopy() {
-        List<String> copy = new ArrayList<String>();
-        for (String s : history)
-        {
-            copy.add(s);
-        }
-        return copy;
+        return new ArrayList<String>(history);
     }
 
 
