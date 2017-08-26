@@ -12,10 +12,6 @@ The peg being jumped over is removed from the board. The goal of the game is to 
 the pegs from the board except one. Ideally the last peg should end up in the same hole
 that was originally empty. It is not always possible on all boards.
 
-I have a [virtual Peg Solitaire board](https://www.khrapov.org/peg-solitaire/english.html),
-implemented in Javascript, that you can play online, as well as interactive representations
-of a few solutions to some of the most common boards.
-
 For more information about Peg Solitaire see [Wikipedia](https://en.wikipedia.org/wiki/Peg_solitaire)
 or [this page](http://www.gibell.net/pegsolitaire/).
 
