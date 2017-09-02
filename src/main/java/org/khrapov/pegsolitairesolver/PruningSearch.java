@@ -18,7 +18,7 @@ public class PruningSearch {
 
 
     /**
-     * Constructore takes the initial BoardState from which to conduct the search.
+     * Constructor takes the initial BoardState from which to conduct the search.
      * Each BoardState instance contains a reference to the BoardConfig object that
      * describes the Board we are searching, so no additional information is necessary.
      *
@@ -155,7 +155,7 @@ public class PruningSearch {
         // I think most likely this result means that
         // this part of the code is not a bottle neck.
 
-        Set<Long> dedup = new TreeSet<Long>();
+        Set<String> dedup = new TreeSet<String>();
         List<BoardState> children = new ArrayList<BoardState>();
 
         for(BoardState b : currentGen) {

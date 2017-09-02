@@ -1,6 +1,6 @@
 # Peg Solitaire Solver
 
-A Java library to solve arbitrary small (up to 64 cells) Peg Solitaire boards.
+A Java library to solve arbitrary Peg Solitaire boards.
 
 Master: [![Build Status](https://travis-ci.org/mkhrapov/peg-solitaire-solver.svg?branch=master)](https://travis-ci.org/mkhrapov/peg-solitaire-solver)
 

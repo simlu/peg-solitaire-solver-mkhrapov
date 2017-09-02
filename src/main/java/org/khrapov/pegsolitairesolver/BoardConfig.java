@@ -23,14 +23,13 @@ public class BoardConfig {
 
 
     /**
-     * Set the dimentions of the array.
+     * Set the dimensions of the array.
      * @param x - horizontal dimension (changes the fastest)
      * @param y - vertical dimension
      */
     public BoardConfig(int x, int y) {
-        if (x < 4 || y < 4 || x * y > 64) {
-            throw new RuntimeException("Board dimentions may not be smaller than 4 " +
-                "or board size may not be larger than 64 cells.");
+        if (x < 1 || y < 1) {
+            throw new RuntimeException("Board dimentions may not be smaller than 1x1.");
         }
 
         sizeX = x;

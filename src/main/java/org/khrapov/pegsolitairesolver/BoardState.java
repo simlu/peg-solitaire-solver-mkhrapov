@@ -16,7 +16,7 @@ public class BoardState {
     private int sizeY;
     private int boardSize;
     private boolean[] occupiedPositions;
-    private long boardID = 0;
+    private String boardID = null;
     private int boardScore = 0;
     private BoardConfig boardConfig;
     private List<String> history;
@@ -27,10 +27,9 @@ public class BoardState {
     // may also be used by in package unit tests.
     BoardState(BoardConfig bc, int x, int y)
     {
-        if(x < 4 || y < 4 || x*y > 64)
+        if(x < 1 || y < 1)
         {
-            throw new RuntimeException("Board dimentions may not be smaller than 4 " +
-                "or board size may not be larger than 64 cells.");
+            throw new RuntimeException("Board dimentions may not be smaller than 1x1.");
         }
 
         boardConfig = bc;
@@ -97,9 +96,9 @@ public class BoardState {
     }
 
 
-    long id()
+    String id()
     {
-        if(boardID == 0)
+        if(boardID == null)
         {
             boardID = calculateSymmetryNormalizedID();
         }
@@ -191,10 +190,10 @@ public class BoardState {
      * @return 64-bit integer unique for a set of symmetry
      * equivalent board positions.
      */
-    long calculateSymmetryNormalizedID()
+    String calculateSymmetryNormalizedID()
     {
         Board b = new Board(sizeX, sizeY, occupiedPositions);
-        List<Long> l = new ArrayList<Long>();
+        List<String> l = new ArrayList<String>();
         l.add(b.properUniqueID());
 
         if(boardConfig.isHorizontalFlip())

@@ -62,7 +62,7 @@ class Board {
     @Override
     public int hashCode()
     {
-        return (int) properUniqueID();
+        return properUniqueID().hashCode();
     }
 
 
@@ -261,19 +261,19 @@ class Board {
      * board position that can be converted to this position via a
      * symmetry operation will have a different properUniqueID.
      *
-     * @return long
+     * @return String
      */
-    long properUniqueID() {
-        long hash = 0L;
+    String properUniqueID() {
+        StringBuilder sb = new StringBuilder();
+
         for(int i = 0; i < boardSize; i++) {
             if(pos[i]) {
-                hash = hash << 1;
-                hash += 1;
+                sb.append('1');
             }
             else {
-                hash = hash << 1;
+                sb.append('0');
             }
         }
-        return hash;
+        return sb.toString();
     }
 }
