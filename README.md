@@ -2,8 +2,6 @@
 
 A Java library to solve arbitrary Peg Solitaire boards.
 
-Master: [![Build Status](https://travis-ci.org/mkhrapov/peg-solitaire-solver.svg?branch=master)](https://travis-ci.org/mkhrapov/peg-solitaire-solver)
-
 Peg Solitaire is an old and very well known board game for one player.
 The board is composed of holes filled in with pegs. The initial position
 is one hole without a peg (often in the center of the board, but not necessarily).
