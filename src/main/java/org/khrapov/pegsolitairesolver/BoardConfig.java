@@ -88,7 +88,7 @@ public class BoardConfig {
 
 
     void discoverSymmetry() {
-        Board b = new Board(sizeX, sizeY, allowedPositions);
+        BoardHelper b = new BoardHelper(sizeX, sizeY, allowedPositions);
 
         if(b.equals(b.verticalFlip()))
         {

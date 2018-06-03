@@ -192,7 +192,7 @@ public class BoardState {
      */
     String calculateSymmetryNormalizedID()
     {
-        Board b = new Board(sizeX, sizeY, occupiedPositions);
+        BoardHelper b = new BoardHelper(sizeX, sizeY, occupiedPositions);
         List<String> l = new ArrayList<String>();
         l.add(b.properUniqueID());
 

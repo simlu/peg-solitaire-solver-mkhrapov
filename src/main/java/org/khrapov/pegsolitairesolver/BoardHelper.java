@@ -1,14 +1,19 @@
 package org.khrapov.pegsolitairesolver;
 
+/**
+ * BoardHelper class contains methods to perform symmetry operations on a Peg
+ * Solitaire boards and positions.
+ */
 
-class Board {
+class BoardHelper
+{
     private int sizeX;
     private int sizeY;
     private int boardSize;
     private boolean[] pos;
 
 
-    Board(int x, int y, boolean[] pos)
+    BoardHelper(int x, int y, boolean[] pos)
     {
         sizeX = x;
         sizeY = y;
@@ -35,21 +40,21 @@ class Board {
             return false;
         }
 
-        if(!(o instanceof Board))
+        if(!(o instanceof BoardHelper))
         {
             return false;
         }
 
-        Board otherBoard = (Board) o;
+        BoardHelper otherBoardHelper = (BoardHelper) o;
 
-        if(this.pos.length != otherBoard.pos.length)
+        if(this.pos.length != otherBoardHelper.pos.length)
         {
             return false;
         }
 
         for(int i = 0; i < pos.length; i++)
         {
-            if(pos[i] != otherBoard.pos[i])
+            if(pos[i] != otherBoardHelper.pos[i])
             {
                 return false;
             }
@@ -66,7 +71,7 @@ class Board {
     }
 
 
-    Board verticalFlip()
+    BoardHelper verticalFlip()
     {
         boolean[] mod_pos = new boolean[boardSize];
         boolean[][] t1 = new boolean[sizeX][sizeY];
@@ -90,11 +95,11 @@ class Board {
             }
         }
 
-        return new Board(sizeX, sizeY, mod_pos);
+        return new BoardHelper(sizeX, sizeY, mod_pos);
     }
 
 
-    Board horizontalFlip() {
+    BoardHelper horizontalFlip() {
         boolean[] mod_pos = new boolean[boardSize];
         boolean[][] t1 = new boolean[sizeX][sizeY];
         boolean[][] t2 = new boolean[sizeX][sizeY];
@@ -117,11 +122,11 @@ class Board {
             }
         }
 
-        return new Board(sizeX, sizeY, mod_pos);
+        return new BoardHelper(sizeX, sizeY, mod_pos);
     }
 
 
-    Board leftDiagonalFlip() {
+    BoardHelper leftDiagonalFlip() {
         boolean[] mod_pos = new boolean[boardSize];
         boolean[][] t1 = new boolean[sizeX][sizeY];
         boolean[][] t2 = new boolean[sizeX][sizeY];
@@ -144,11 +149,11 @@ class Board {
             }
         }
 
-        return new Board(sizeX, sizeY, mod_pos);
+        return new BoardHelper(sizeX, sizeY, mod_pos);
     }
 
 
-    Board rightDiagonalFlip() {
+    BoardHelper rightDiagonalFlip() {
         boolean[] mod_pos = new boolean[boardSize];
         boolean[][] t1 = new boolean[sizeX][sizeY];
         boolean[][] t2 = new boolean[sizeX][sizeY];
@@ -171,11 +176,11 @@ class Board {
             }
         }
 
-        return new Board(sizeX, sizeY, mod_pos);
+        return new BoardHelper(sizeX, sizeY, mod_pos);
     }
 
 
-    Board rotate90() {
+    BoardHelper rotate90() {
         boolean[] mod_pos = new boolean[boardSize];
         boolean[][] t1 = new boolean[sizeX][sizeY];
         boolean[][] t2 = new boolean[sizeX][sizeY];
@@ -198,11 +203,11 @@ class Board {
             }
         }
 
-        return new Board(sizeX, sizeY, mod_pos);
+        return new BoardHelper(sizeX, sizeY, mod_pos);
     }
 
 
-    Board rotate180() {
+    BoardHelper rotate180() {
         boolean[] mod_pos = new boolean[boardSize];
         boolean[][] t1 = new boolean[sizeX][sizeY];
         boolean[][] t2 = new boolean[sizeX][sizeY];
@@ -225,11 +230,11 @@ class Board {
             }
         }
 
-        return new Board(sizeX, sizeY, mod_pos);
+        return new BoardHelper(sizeX, sizeY, mod_pos);
     }
 
 
-    Board rotate270() {
+    BoardHelper rotate270() {
         boolean[] mod_pos = new boolean[boardSize];
         boolean[][] t1 = new boolean[sizeX][sizeY];
         boolean[][] t2 = new boolean[sizeX][sizeY];
@@ -252,12 +257,12 @@ class Board {
             }
         }
 
-        return new Board(sizeX, sizeY, mod_pos);
+        return new BoardHelper(sizeX, sizeY, mod_pos);
     }
 
 
     /**
-     * Unique own properUniqueID for this Board position. A different
+     * Unique own properUniqueID for this BoardHelper position. A different
      * board position that can be converted to this position via a
      * symmetry operation will have a different properUniqueID.
      *
