@@ -73,15 +73,12 @@
                   <goal>report</goal>
               </goals>
           </execution>
-          <!-- Travis CI chokes on this -->
-          <!--
           <execution>
           <id>default-check</id>
           <goals>
               <goal>check</goal>
           </goals>
           </execution>
-          -->
           </executions>
         </plugin>
       </plugins>

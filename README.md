@@ -61,9 +61,7 @@ Then add the dependency to the Maven POM file.
 </dependency>
 ```
 
-Java example. More examples are in the 
-[unit test files](https://github.com/mkhrapov/peg-solitaire-solver/blob/master/src/test/java/org/khrapov/pegsoltest/PruningSearchTest.java)
-and in the [Javadoc](https://www.khrapov.org/javadoc/peg-solitaire-solver/index.html).
+Java example. More examples are in the unit test files and in the Javadoc.
 
 ```java
 // Solve English Peg Solitaire Board

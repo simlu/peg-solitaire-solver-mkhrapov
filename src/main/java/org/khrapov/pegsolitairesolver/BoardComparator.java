@@ -1,8 +1,13 @@
 package org.khrapov.pegsolitairesolver;
 
+
+
 import java.io.Serializable;
 import java.util.Comparator;
 
+/**
+ * BoardComparator implements the comparison operations on BoardState class.
+ */
 public class BoardComparator implements Comparator<BoardState>, Serializable {
 
     private static final long serialVersionUID = 13033L;

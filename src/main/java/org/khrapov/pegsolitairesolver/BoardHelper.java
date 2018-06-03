@@ -1,11 +1,10 @@
 package org.khrapov.pegsolitairesolver;
 
 /**
- * BoardHelper class contains methods to perform symmetry operations on a Peg
- * Solitaire boards and positions.
+ * BoardHelper class contains methods to perform symmetry operations on a Peg Solitaire boards and positions.
+ *
  */
-
-class BoardHelper
+public class BoardHelper
 {
     private int sizeX;
     private int sizeY;
