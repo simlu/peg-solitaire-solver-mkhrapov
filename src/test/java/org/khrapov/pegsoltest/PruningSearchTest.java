@@ -38,7 +38,7 @@ public class PruningSearchTest
       for (int i = 0; i < solutions; i++)
       {
         System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolution(i));
+        System.out.println(pruningSearch.getSolutionAsString(i));
       }
     }
     else
@@ -76,7 +76,7 @@ public class PruningSearchTest
       for (int i = 0; i < solutions; i++)
       {
         System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolution(i));
+        System.out.println(pruningSearch.getSolutionAsString(i));
       }
     }
     else
@@ -114,7 +114,7 @@ public class PruningSearchTest
       for (int i = 0; i < solutions; i++)
       {
         System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolution(i));
+        System.out.println(pruningSearch.getSolutionAsString(i));
       }
     }
     else
@@ -151,7 +151,7 @@ public class PruningSearchTest
       for (int i = 0; i < solutions; i++)
       {
         System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolution(i));
+        System.out.println(pruningSearch.getSolutionAsString(i));
       }
     }
     else
@@ -186,7 +186,7 @@ public class PruningSearchTest
       for (int i = 0; i < solutions; i++)
       {
         System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolution(i));
+        System.out.println(pruningSearch.getSolutionAsString(i));
       }
     }
     else
@@ -236,7 +236,7 @@ public class PruningSearchTest
       for (int i = 0; i < solutions; i++)
       {
         System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolution(i));
+        System.out.println(pruningSearch.getSolutionAsString(i));
       }
     }
     else

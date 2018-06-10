@@ -109,12 +109,12 @@ public class PruningSearch {
 
     /**
      * Return a particular solution from the list of solutions. May return NULL if
-     * properUniqueID is illegal.
+     * ID is illegal.
      *
      * @param id return consecutively numbered solution
      * @return String solution represented as a String.
      */
-    public String getSolution(int id)
+    public String getSolutionAsString(int id)
     {
         if(solutions == null)
         {
@@ -125,6 +125,29 @@ public class PruningSearch {
         {
             return null;
         }
+
+        StringBuilder sb = new StringBuilder();
+        for(Move m : solutions.get(id).getHistory())
+        {
+            sb.append(m.toString());
+        }
+
+        return sb.toString();
+    }
+
+
+    public List<Move> getSolution(int id)
+    {
+        if(solutions == null)
+        {
+            return null;
+        }
+
+        if(id >= solutions.size() || id < 0)
+        {
+            return null;
+        }
+
         return solutions.get(id).getHistory();
     }
 

@@ -19,7 +19,7 @@ public class BoardState {
     private String boardID = null;
     private int boardScore = 0;
     private BoardConfig boardConfig;
-    private List<String> history;
+    private List<Move> history;
 
 
     // constructor is not public. Should only be used by
@@ -38,7 +38,7 @@ public class BoardState {
         boardSize = x*y;
 
         occupiedPositions = new boolean[x*y];
-        history = new ArrayList<String>();
+        history = new ArrayList<Move>();
     }
 
 
@@ -327,24 +327,18 @@ public class BoardState {
     }
 
 
-    List<String> historyCopy() {
-        return new ArrayList<String>(history);
+    List<Move> historyCopy() {
+        return new ArrayList<Move>(history);
     }
 
 
     void historyAdd(int x1, int y1, int x2, int y2) {
-        history.add(String.format("[%d, %d, %d, %d],%n", x1, y1, x2, y2));
+        history.add(new Move(x1, y1, x2, y2));
     }
 
-    String getHistory()
+    List<Move> getHistory()
     {
-        StringBuilder sb = new StringBuilder();
-        for(String s : history)
-        {
-            sb.append(s);
-        }
-
-        return sb.toString();
+        return history;
     }
 
     void display(String header)
