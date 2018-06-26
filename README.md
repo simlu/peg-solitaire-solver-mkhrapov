@@ -57,7 +57,7 @@ Then add the dependency to the Maven POM file.
 <dependency>
   <groupId>org.khrapov</groupId>
   <artifactId>peg-solitaire-solver</artifactId>
-  <version>0.8-SNAPSHOT</version>
+  <version>0.9</version>
 </dependency>
 ```
 
