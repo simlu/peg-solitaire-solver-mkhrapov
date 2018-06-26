@@ -8,40 +8,72 @@ import org.junit.*;
 
 public class PruningSearchTest
 {
+  private static int[] englishBoard = new int[]{
+      0, 0, 1, 1, 1, 0, 0,
+      0, 0, 1, 1, 1, 0, 0,
+      1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1,
+      0, 0, 1, 1, 1, 0, 0,
+      0, 0, 1, 1, 1, 0, 0
+  };
+
+
+  private static int[] frenchBoard = new int[]{
+      0, 0, 1, 1, 1, 0, 0,
+      0, 1, 1, 1, 1, 1, 0,
+      1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1,
+      0, 1, 1, 1, 1, 1, 0,
+      0, 0, 1, 1, 1, 0, 0
+  };
+
+
+  private static int[] board6x6 = new int[]{
+      1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1
+  };
+
+
+  private static int[] board4x6 = new int[]{
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      1, 1, 1, 1
+  };
+
+
+  private static int[] board9x9 = new int[]{
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1
+  };
+
+
 
   @Test
   public void solveEnglishBoard()
   {
-    BoardConfig boardConfig = new BoardConfig(7, 7);
-    boardConfig.setAllowedPositions(
-        new int[]{
-            0, 0, 1, 1, 1, 0, 0,
-            0, 0, 1, 1, 1, 0, 0,
-            1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1,
-            0, 0, 1, 1, 1, 0, 0,
-            0, 0, 1, 1, 1, 0, 0
-        }
-    );
+    Board b = new Board(7, 7, englishBoard);
+    Position p = b.initialPosition(3, 3);
+    PruningSearch pruningSearch = new PruningSearch(p);
 
-    BoardState boardState = boardConfig.initialState(3, 3);
-    PruningSearch pruningSearch = new PruningSearch(boardState);
-    pruningSearch.setDebug(true);
-
-    // minimum pruning number with which this search can
-    // find a solution is 10
-    pruningSearch.prune(10);
+    pruningSearch.prune(121);
     int solutions = pruningSearch.search();
-    if (solutions > 0)
-    {
-      for (int i = 0; i < solutions; i++)
-      {
-        System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolutionAsString(i));
-      }
-    }
-    else
+    if (solutions < 1)
     {
       fail("Solution to English board has not been found");
     }
@@ -51,35 +83,13 @@ public class PruningSearchTest
   @Test
   public void solveFrenchBoard1()
   {
-    BoardConfig boardConfig = new BoardConfig(7, 7);
-    boardConfig.setAllowedPositions(
-        new int[]{
-            0, 0, 1, 1, 1, 0, 0,
-            0, 1, 1, 1, 1, 1, 0,
-            1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1,
-            0, 1, 1, 1, 1, 1, 0,
-            0, 0, 1, 1, 1, 0, 0
-        }
-    );
+    Board b = new Board(7, 7, frenchBoard);
+    Position p = b.initialPosition(0, 2);
+    PruningSearch pruningSearch = new PruningSearch(p);
 
-    BoardState boardState = boardConfig.initialState(0, 2);
-    PruningSearch pruningSearch = new PruningSearch(boardState);
-
-    // minimum pruning number with which this search can
-    // find a solution
     pruningSearch.prune(9);
     int solutions = pruningSearch.search();
-    if (solutions > 0)
-    {
-      for (int i = 0; i < solutions; i++)
-      {
-        System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolutionAsString(i));
-      }
-    }
-    else
+    if (solutions < 1)
     {
       fail("Solution to French1 board has not been found");
     }
@@ -89,35 +99,13 @@ public class PruningSearchTest
   @Test
   public void solveFrenchBoard2()
   {
-    BoardConfig boardConfig = new BoardConfig(7, 7);
-    boardConfig.setAllowedPositions(
-        new int[]{
-            0, 0, 1, 1, 1, 0, 0,
-            0, 1, 1, 1, 1, 1, 0,
-            1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1,
-            0, 1, 1, 1, 1, 1, 0,
-            0, 0, 1, 1, 1, 0, 0
-        }
-    );
+    Board b = new Board(7, 7, frenchBoard);
+    Position p = b.initialPosition(1, 3);
+    PruningSearch pruningSearch = new PruningSearch(p);
 
-    BoardState boardState = boardConfig.initialState(1, 3);
-    PruningSearch pruningSearch = new PruningSearch(boardState);
-
-    // minimum pruning number with which this search can
-    // find a solution
-    pruningSearch.prune(26);
+    pruningSearch.prune(24);
     int solutions = pruningSearch.search();
-    if (solutions > 0)
-    {
-      for (int i = 0; i < solutions; i++)
-      {
-        System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolutionAsString(i));
-      }
-    }
-    else
+    if (solutions < 1)
     {
       fail("Solution to French2 board has not been found");
     }
@@ -127,34 +115,13 @@ public class PruningSearchTest
   @Test
   public void solve6x6Board()
   {
-    BoardConfig boardConfig = new BoardConfig(6, 6);
-    boardConfig.setAllowedPositions(
-        new int[]{
-            1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1
-        }
-    );
+    Board b = new Board(6, 6, board6x6);
+    Position p = b.initialPosition(1, 1);
+    PruningSearch pruningSearch = new PruningSearch(p);
 
-    BoardState boardState = boardConfig.initialState(1, 1);
-    PruningSearch pruningSearch = new PruningSearch(boardState);
-
-    // minimum pruning number with which this search can
-    // find a solution
-    pruningSearch.prune(17);
+    pruningSearch.prune(54);
     int solutions = pruningSearch.search();
-    if (solutions > 0)
-    {
-      for (int i = 0; i < solutions; i++)
-      {
-        System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolutionAsString(i));
-      }
-    }
-    else
+    if (solutions < 1)
     {
       fail("Solution to 6x6 board has not been found");
     }
@@ -162,84 +129,62 @@ public class PruningSearchTest
 
 
   @Test
-  public void solve6x4Board()
+  public void solve4x6Board()
   {
-    BoardConfig boardConfig = new BoardConfig(4, 6);
-    boardConfig.setAllowedPositions(
-        new int[]{
-            1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1,
-            1, 1, 1, 1
-        }
-    );
+    Board b = new Board(6, 4, board4x6);
+    Position p = b.initialPosition(1, 1);
+    PruningSearch pruningSearch = new PruningSearch(p);
 
-    BoardState boardState = boardConfig.initialState(1, 1);
-    PruningSearch pruningSearch = new PruningSearch(boardState);
-
-    pruningSearch.prune(5);
+    pruningSearch.prune(4);
     int solutions = pruningSearch.search();
-    if (solutions > 0)
-    {
-      for (int i = 0; i < solutions; i++)
-      {
-        System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolutionAsString(i));
-      }
-    }
-    else
+    if (solutions < 1)
     {
       fail("Solution to 4x6 board has not been found");
     }
   }
 
+
   @Test
   public void minimalBoardSize()
   {
-    BoardConfig bc = new BoardConfig(1, 1);
+    Board b = new Board(1, 1, new int[] { 1 });
   }
 
 
   @Test(expected = RuntimeException.class)
   public void boardTooSmall()
   {
-    BoardConfig bc = new BoardConfig(0, 0);
+    Board b = new Board(0, 0, new int[] { 1 });
   }
+
 
   @Test
   public void solve9x9Board()
   {
-    BoardConfig boardConfig = new BoardConfig(9, 9);
-    boardConfig.setAllowedPositions(
-        new int[]{
-            1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1
-        }
-    );
+    Board b = new Board(9, 9, board9x9);
+    Position p = b.initialPosition(4, 4);
+    PruningSearch pruningSearch = new PruningSearch(p);
+    pruningSearch.prune(15);
 
-    BoardState boardState = boardConfig.initialState(4, 4);
-    PruningSearch pruningSearch = new PruningSearch(boardState);
-
-    pruningSearch.prune(50);
     int solutions = pruningSearch.search();
-    if (solutions > 0)
+    if (solutions < 1)
     {
-      for (int i = 0; i < solutions; i++)
-      {
-        System.out.println("Solution " + (i + 1));
-        System.out.println(pruningSearch.getSolutionAsString(i));
-      }
+      fail("Solution to 9x9 board has not been found");
     }
-    else
+  }
+
+
+  @Test
+  public void solve9x9BoardWithSymmetry()
+  {
+    Board b = new Board(9, 9, board9x9);
+    Position p = b.initialPosition(4, 4);
+    PruningSearch pruningSearch = new PruningSearch(p);
+    pruningSearch.setUseSymmetry(true);
+    pruningSearch.prune(17);
+
+    int solutions = pruningSearch.search();
+    if (solutions < 1)
     {
       fail("Solution to 9x9 board has not been found");
     }

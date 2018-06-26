@@ -43,7 +43,7 @@ A code example:
 <pre>
 {@code
 // Solve English Peg Solitaire Board
-BoardConfig boardConfig = new BoardConfig(7, 7);
+Board boardConfig = new Board(7, 7);
 boardConfig.setAllowedPositions(
     new int[] {
         0, 0, 1, 1, 1, 0, 0,
@@ -56,7 +56,7 @@ boardConfig.setAllowedPositions(
     }
 );
 
-BoardState boardState = boardConfig.initialState(3, 3);
+Position boardState = boardConfig.initialState(3, 3);
 PruningSearch pruningSearch = new PruningSearch(boardState);
 pruningSearch.setDebug(true);
 pruningSearch.prune(10);

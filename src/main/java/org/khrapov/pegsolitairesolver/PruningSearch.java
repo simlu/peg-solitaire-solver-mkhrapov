@@ -10,40 +10,36 @@ import java.util.TreeSet;
  * Class PruningSearch encapsulates the pruning search algorithm of this Peg Solitaire solver.
  */
 public class PruningSearch {
-    private BoardState initialBoardState;
-    private int pruningNumber = 10000;
-    private List<BoardState> solutions;
-    private int generation;
-    private boolean DEBUG = false;
+    private final Position initialPosition;
+    private int pruningNumber = 200;
+    private final List<Position> solutions;
+    private boolean useSymmetry = false;
 
 
     /**
-     * Constructor takes the initial BoardState from which to conduct the search.
-     * Each BoardState instance contains a reference to the BoardConfig object that
+     * Constructor takes the initial Position from which to conduct the search.
+     * Each Position instance contains a reference to the Board object that
      * describes the Board we are searching, so no additional information is necessary.
      *
-     * @param boardState initial Board State from which we will conduct the search.
+     * @param initialPosition initial Position from which we will conduct the search.
      */
-    public PruningSearch(BoardState boardState)
+    public PruningSearch(Position initialPosition)
     {
-        initialBoardState = boardState;
-        solutions = new ArrayList<BoardState>();
+        this.initialPosition = initialPosition;
+        solutions = new ArrayList<Position>();
     }
 
 
     /**
      * <p>This method sets the <code>pruningNumber</code>. It is not necessary
-     * to call this as the default is preset to 10000. This default, however,
-     * is very lax and in most cases a much smaller value will allow to solve a
-     * board. This value also affects greatly how long the search will take. It is
-     * thus recommended to set an initial low <code>pruningNumber</code> (e.g. &lt; 50)
-     * and if this turns out to be too aggressive and no solution is found, then increase it
-     * gradually until the board is solved.
+     * to call this as the default is preset to 200. If this turns out to be too aggressive
+     * and no solution is found, then increase it gradually until the board is solved.
+     * Larger <code>pruningNumber</code> will result in longer search times.
      * </p>
      *
      * <p>
      * Setting this to 0 (zero) will disable the pruning. In such a case the full search
-     * tree is examined.
+     * tree is examined. This will take hours.
      * </p>
      *
      * <p>
@@ -61,6 +57,12 @@ public class PruningSearch {
     }
 
 
+    public void setUseSymmetry(boolean val)
+    {
+        useSymmetry = val;
+    }
+
+
     /**
      * Initiates search.
      *
@@ -68,100 +70,16 @@ public class PruningSearch {
      */
     public int search()
     {
-        List<BoardState> gen1 = new ArrayList<BoardState>();
-        gen1.add(initialBoardState);
+        List<Position> gen0 = new ArrayList<Position>();
+        gen0.add(initialPosition);
 
-        generation = 1;
-        searchByGeneration(gen1);
-        return getNumSolutions();
+        searchByGeneration(gen0);
+        return solutions.size();
     }
 
 
-    /**
-     * Returns the number of found solutions. Prior to calling <code>search</code>
-     * method this number would always be zero.
-     *
-     * @return returns the number of found solutions.
-     */
-    public int getNumSolutions()
+    void searchByGeneration(List<Position> currentGen)
     {
-        if(solutions != null)
-        {
-            return solutions.size();
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-
-    /**
-     * If set to true, extra debugging info will be output to STDOUT.
-     *
-     * @param dbg boolean enable or disable outputting extra debugging info
-     */
-    public void setDebug(boolean dbg)
-    {
-        DEBUG = dbg;
-    }
-
-
-    /**
-     * Return a particular solution from the list of solutions. May return NULL if
-     * ID is illegal.
-     *
-     * @param id return consecutively numbered solution
-     * @return String solution represented as a String.
-     */
-    public String getSolutionAsString(int id)
-    {
-        if(solutions == null)
-        {
-            return null;
-        }
-
-        if(id >= solutions.size() || id < 0)
-        {
-            return null;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for(Move m : solutions.get(id).getHistory())
-        {
-            sb.append(m.toString());
-        }
-
-        return sb.toString();
-    }
-
-
-    public List<Move> getSolution(int id)
-    {
-        if(solutions == null)
-        {
-            return null;
-        }
-
-        if(id >= solutions.size() || id < 0)
-        {
-            return null;
-        }
-
-        return solutions.get(id).getHistory();
-    }
-
-
-    void searchByGeneration(List<BoardState> currentGen)
-    {
-        if(DEBUG)
-        {
-            System.out.print(String.format("Generation: %d Size: %d %n", generation,
-                currentGen.size()));
-        }
-
-        generation++;
-
         if(currentGen.size() == 0)
         {
             return;
@@ -179,31 +97,43 @@ public class PruningSearch {
         // this part of the code is not a bottle neck.
 
         Set<String> dedup = new TreeSet<String>();
-        List<BoardState> children = new ArrayList<BoardState>();
+        List<Position> children = new ArrayList<Position>();
 
-        for(BoardState b : currentGen) {
-            for(BoardState child : b.children()) {
-                if(!dedup.contains(child.id())) {
-                    dedup.add(child.id());
-                    children.add(child);
+        for(Position b : currentGen) {
+            for(Position child : b.children()) {
+                if(useSymmetry)
+                {
+                    if(!dedup.contains(child.symmID()))
+                    {
+                        dedup.add(child.symmID());
+                        children.add(child);
+                    }
+                }
+                else
+                {
+                    if (!dedup.contains(child.id()))
+                    {
+                        dedup.add(child.id());
+                        children.add(child);
+                    }
                 }
             }
         }
 
-        for(BoardState b : children) {
+        for(Position b : children) {
             if(b.isFinal()) {
                 solutions.add(b);
             }
         }
 
-        if(solutions != null && solutions.size() > 0)
+        if(solutions.size() > 0)
         {
             return;
         }
 
         if(pruningNumber > 0 && children.size() > pruningNumber) {
-            Collections.sort(children, new BoardComparator());
-            List<BoardState> children2 = new ArrayList<BoardState>();
+            Collections.sort(children, new PositionComparator());
+            List<Position> children2 = new ArrayList<Position>();
             for(int i = 0; i < pruningNumber; i++) {
                 children2.add(children.get(i));
             }
