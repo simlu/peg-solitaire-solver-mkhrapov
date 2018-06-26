@@ -65,26 +65,19 @@ Java example. More examples are in the unit test files and in the Javadoc.
 
 ```java
 // Solve English Peg Solitaire Board
-BoardConfig boardConfig = new BoardConfig(7, 7);
-boardConfig.setAllowedPositions(
-    new int[] {
-        0, 0, 1, 1, 1, 0, 0,
-        0, 0, 1, 1, 1, 0, 0,
-        1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1,
-        0, 0, 1, 1, 1, 0, 0,
-        0, 0, 1, 1, 1, 0, 0
-    }
-);
+int[] englishBoard = new int[] {
+    0, 0, 1, 1, 1, 0, 0,
+    0, 0, 1, 1, 1, 0, 0,
+    1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1,
+    0, 0, 1, 1, 1, 0, 0,
+    0, 0, 1, 1, 1, 0, 0
+};
 
-BoardState boardState = boardConfig.initialState(3, 3);
-PruningSearch pruningSearch = new PruningSearch(boardState);
-pruningSearch.setDebug(true);
-pruningSearch.prune(10);
+Board b = new Board(7, 7, englishBoard);
+Position p = b.initialPosition(3, 3);
+PruningSearch pruningSearch = new PruningSearch(p);
+pruningSearch.prune(121);
 int solutions = pruningSearch.search();
-if(solutions > 0)
-{
-    System.out.println(pruningSearch.getSolution(0));
-}
 ```
