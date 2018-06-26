@@ -63,6 +63,32 @@ public class PruningSearchTest
   };
 
 
+  private static int[] wiegleb = new int[] {
+      0, 0, 0, 1, 1, 1, 0, 0, 0,
+      0, 0, 0, 1, 1, 1, 0, 0, 0,
+      0, 0, 0, 1, 1, 1, 0, 0, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      0, 0, 0, 1, 1, 1, 0, 0, 0,
+      0, 0, 0, 1, 1, 1, 0, 0, 0,
+      0, 0, 0, 1, 1, 1, 0, 0, 0
+  };
+
+
+  private static int[] diamond41 = new int[] {
+      0, 0, 0, 0, 1, 0, 0, 0, 0,
+      0, 0, 0, 1, 1, 1, 0, 0, 0,
+      0, 0, 1, 1, 1, 1, 1, 0, 0,
+      0, 1, 1, 1, 1, 1, 1, 1, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1,
+      0, 1, 1, 1, 1, 1, 1, 1, 0,
+      0, 0, 1, 1, 1, 1, 1, 0, 0,
+      0, 0, 0, 1, 1, 1, 0, 0, 0,
+      0, 0, 0, 0, 1, 0, 0, 0, 0
+  };
+
+
 
   @Test
   public void solveEnglishBoard()
@@ -187,6 +213,51 @@ public class PruningSearchTest
     if (solutions < 1)
     {
       fail("Solution to 9x9 board has not been found");
+    }
+  }
+
+
+  @Test
+  public void solveWieglebBoard()
+  {
+    Board b = new Board(9, 9, wiegleb);
+    Position p = b.initialPosition(4, 4);
+    PruningSearch pruningSearch = new PruningSearch(p);
+    pruningSearch.prune(186);
+
+    // somebody requested a benchmark
+    long start = System.nanoTime();
+    int solutions = pruningSearch.search();
+    long end = System.nanoTime();
+
+    System.out.printf("Solving Wiegleb board took %f seconds.%n", (end-start)/1_000_000_000.0);
+
+    if (solutions < 1)
+    {
+      fail("Solution to Wiegleb board has not been found");
+    }
+  }
+
+
+  @Test
+  public void solveDiamond41Board()
+  {
+    Board b = new Board(9, 9, diamond41);
+    Position p = b.initialPosition(4, 4);
+    PruningSearch pruningSearch = new PruningSearch(p);
+    pruningSearch.setUseSymmetry(true);
+    pruningSearch.prune(100);
+
+    // somebody requested a benchmark
+    long start = System.nanoTime();
+    int solutions = pruningSearch.search();
+    long end = System.nanoTime();
+
+    System.out.printf("Solving Diamond41 board took %f seconds.%n", (end-start)/1_000_000_000.0);
+
+    if (solutions < 1)
+    {
+      fail("Solution to Diamond41 board has not been found");
     }
   }
 }
