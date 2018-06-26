@@ -240,13 +240,36 @@ public class PruningSearchTest
 
 
   @Test
-  public void solveDiamond41Board()
+  public void solveDiamond41Board1()
   {
     Board b = new Board(9, 9, diamond41);
-    Position p = b.initialPosition(4, 4);
+    Position p = b.initialPosition(3, 1);
     PruningSearch pruningSearch = new PruningSearch(p);
     pruningSearch.setUseSymmetry(true);
-    pruningSearch.prune(100);
+    pruningSearch.prune(83);
+
+    // somebody requested a benchmark
+    long start = System.nanoTime();
+    int solutions = pruningSearch.search();
+    long end = System.nanoTime();
+
+    System.out.printf("Solving Diamond41 board took %f seconds.%n", (end-start)/1_000_000_000.0);
+
+    if (solutions < 1)
+    {
+      fail("Solution to Diamond41 board has not been found");
+    }
+  }
+
+
+  @Test
+  public void solveDiamond41Board2()
+  {
+    Board b = new Board(9, 9, diamond41);
+    Position p = b.initialPosition(4, 2);
+    PruningSearch pruningSearch = new PruningSearch(p);
+    pruningSearch.setUseSymmetry(true);
+    pruningSearch.prune(82);
 
     // somebody requested a benchmark
     long start = System.nanoTime();
