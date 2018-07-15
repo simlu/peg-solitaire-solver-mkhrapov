@@ -28,6 +28,7 @@ public final class Board
      * Set the dimensions of the array.
      * @param x - horizontal dimension (changes the fastest)
      * @param y - vertical dimension
+     * @param holes - int[], which holes are in play. 1 - in play. 0 - outside of the board.
      */
     public Board(int x, int y, int[] holes) {
         if (x < 1 || y < 1) {
