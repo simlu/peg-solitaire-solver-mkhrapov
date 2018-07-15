@@ -63,6 +63,15 @@ public class PruningSearch {
     }
 
 
+    public List<Move> getSolution(int i)
+    {
+        if(i < 0) { return null; }
+        if(i >= solutions.size()) { return null; }
+
+        return solutions.get(i).getHistory();
+    }
+
+
     /**
      * Initiates search.
      *
