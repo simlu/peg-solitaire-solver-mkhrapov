@@ -9,8 +9,8 @@ package org.khrapov.pegsolitairesolver;
  */
 public final class Board
 {
-    final int X;
-    final int Y;
+    public final int X;
+    public final int Y;
 
     // symmetry
     final boolean verticalFlip;
@@ -88,6 +88,17 @@ public final class Board
 
     boolean allowed(int i)
     {
+        return holes[i];
+    }
+
+    public boolean allowed(int x, int y)
+    {
+        if(x < 0 || y < 0 || x >= X || y >= Y)
+        {
+            throw new RuntimeException("array index out of bounds");
+        }
+
+        int i = y*X + x;
         return holes[i];
     }
 }
