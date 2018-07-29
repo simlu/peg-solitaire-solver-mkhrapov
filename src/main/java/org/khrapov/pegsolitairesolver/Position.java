@@ -45,6 +45,31 @@ public class Position
     }
 
 
+    public boolean occupied(int x, int y)
+    {
+        if(board.allowed(x, y))
+        {
+            int i = y*board.X + x;
+            return occupied[i];
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    public Position copy()
+    {
+        Position p = new Position(this.board);
+        for(int i = 0; i < occupied.length; i++)
+        {
+            p.occupied[i] = this.occupied[i];
+        }
+        return p;
+    }
+
+
     void set(int x, int y, boolean state)
     {
         occupied[y*board.X + x] = state;
