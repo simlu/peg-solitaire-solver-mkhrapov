@@ -70,7 +70,7 @@ public class Position
     }
 
 
-    void set(int x, int y, boolean state)
+    public void set(int x, int y, boolean state)
     {
         occupied[y*board.X + x] = state;
     }
