@@ -48,6 +48,7 @@ Source JAR and Javadoc JAR files will be included.
 ```
 git clone https://github.com/mkhrapov/peg-solitaire-solver.git
 cd peg-solitaire-solver
+git checkout 1.0
 mvn install
 ```
 
@@ -57,11 +58,12 @@ Then add the dependency to the Maven POM file.
 <dependency>
   <groupId>org.khrapov</groupId>
   <artifactId>peg-solitaire-solver</artifactId>
-  <version>0.9</version>
+  <version>1.0</version>
 </dependency>
 ```
 
-Java example. More examples are in the unit test files and in the Javadoc.
+Java example. More examples are in the unit test files and in the Javadoc. Even more complete
+examples are in my [solutions visualization project](https://github.com/mkhrapov/peg-solitaire-visualization).
 
 ```java
 // Solve English Peg Solitaire Board
