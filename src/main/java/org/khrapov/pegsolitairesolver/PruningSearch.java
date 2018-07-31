@@ -12,8 +12,8 @@ import java.util.TreeSet;
 public class PruningSearch {
     private final Position initialPosition;
     private int pruningNumber = 200;
-    private final List<Position> solutions;
     private boolean useSymmetry = false;
+    private final List<Position> solutions;
 
 
     /**
@@ -69,6 +69,15 @@ public class PruningSearch {
         if(i >= solutions.size()) { return null; }
 
         return solutions.get(i).getHistory();
+    }
+
+
+    public Position getFinalPosition(int i)
+    {
+        if(i < 0) { return null; }
+        if(i >= solutions.size()) { return null; }
+
+        return solutions.get(i);
     }
 
 

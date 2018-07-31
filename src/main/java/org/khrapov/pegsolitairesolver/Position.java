@@ -76,6 +76,22 @@ public class Position
     }
 
 
+    public boolean isComplement(Position other)
+    {
+        for(int i = 0; i < occupied.length; i++)
+        {
+            if(board.allowed(i))
+            {
+                if (occupied[i] == other.occupied[i])
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     void set(int i, boolean state)
     {
         occupied[i] = state;
