@@ -1,4 +1,4 @@
-package org.khrapov.pegsolitairesolver;
+package org.khrapov.pegsolitaire.solver;
 
 import java.util.ArrayList;
 import java.util.Collections;

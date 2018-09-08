@@ -1,8 +1,10 @@
-package org.khrapov.pegsoltest;
+package org.khrapov.pegsolitaire.test;
 
 import static org.junit.Assert.*;
 
-import org.khrapov.pegsolitairesolver.*;
+import org.khrapov.pegsolitaire.solver.Board;
+import org.khrapov.pegsolitaire.solver.Position;
+import org.khrapov.pegsolitaire.solver.PruningSearch;
 import org.junit.*;
 
 

@@ -1,4 +1,4 @@
-package org.khrapov.pegsolitairesolver;
+package org.khrapov.pegsolitaire.solver;
 
 import java.io.Serializable;
 import java.util.Comparator;

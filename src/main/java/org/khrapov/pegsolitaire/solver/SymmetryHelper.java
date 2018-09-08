@@ -1,4 +1,4 @@
-package org.khrapov.pegsolitairesolver;
+package org.khrapov.pegsolitaire.solver;
 
 
 class SymmetryHelper

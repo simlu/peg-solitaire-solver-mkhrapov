@@ -66,4 +66,4 @@ int solutions = pruningSearch.search();
 
 */
 
-package org.khrapov.pegsolitairesolver;
+package org.khrapov.pegsolitaire.solver;
