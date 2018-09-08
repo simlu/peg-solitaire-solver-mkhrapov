@@ -83,3 +83,15 @@ PruningSearch pruningSearch = new PruningSearch(p);
 pruningSearch.prune(121);
 int solutions = pruningSearch.search();
 ```
+
+Package `org.khrapov.pegsolitaire.javafxviz` contains a JavaFX based visualization of
+pegsolitaire solutions. It has only been tested with Java 8. It
+uses JavaFX library which has undergone a lot of changes in recent
+versions of Java. It will probably not work out-of-box with newer versions
+of Java. The easiest way to run it currently is to open it in an IDE and run the
+main method of one the classes that solves a particular Peg Solitaire board.
+
+Screenshot of visualization.
+
+![](img/english-board-solution.png)
+
