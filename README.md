@@ -63,7 +63,7 @@ Then add the dependency to the Maven POM file.
 ```
 
 Java example. More examples are in the unit test files and in the Javadoc. Even more complete
-examples are in my [solutions visualization project](https://github.com/mkhrapov/peg-solitaire-visualization).
+examples are in the visualization package.
 
 ```java
 // Solve English Peg Solitaire Board
