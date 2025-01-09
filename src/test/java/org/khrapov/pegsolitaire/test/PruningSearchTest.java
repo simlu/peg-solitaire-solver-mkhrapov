@@ -90,6 +90,31 @@ public class PruningSearchTest
       0, 0, 0, 0, 1, 0, 0, 0, 0
   };
 
+  @Test
+  public void solveXXX()
+  {
+    int[] board = new int[]{
+            0, 0, 1, 1, 1, 0, 0,
+            0, 0, 1, 1, 1, 0, 0,
+            1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1,
+            0, 0, 1, 1, 1, 0, 0,
+            0, 0, 1, 1, 1, 0, 0
+    };
+    Board b = new Board(7, 7, board);
+    Position p = b.initialPosition(3, 3);
+    PruningSearch pruningSearch = new PruningSearch(p);
+
+    pruningSearch.prune(121);
+    int solutions = pruningSearch.search();
+    if (solutions < 1)
+    {
+      fail("Solution to English board has not been found");
+    }
+    System.out.println(pruningSearch.getSolution(0));
+  }
+
 
 
   @Test
