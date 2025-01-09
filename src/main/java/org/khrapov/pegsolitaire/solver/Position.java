@@ -347,4 +347,20 @@ public class Position
     {
         return history;
     }
+
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        for (int x = 0; x < board.X; x++) {
+            for (int y = 0; y < board.Y; y++) {
+                if (board.allowed(x, y)) {
+                    b.append(this.occupied(x, y) ? 'x' : 'o');
+                } else {
+                    b.append((' '));
+                }
+                b.append(' ');
+            }
+            b.append('\n');
+        }
+        return b.toString();
+    }
 }

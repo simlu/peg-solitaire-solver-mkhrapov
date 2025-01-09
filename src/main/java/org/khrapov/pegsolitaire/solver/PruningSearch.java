@@ -11,6 +11,7 @@ import java.util.TreeSet;
  */
 public class PruningSearch {
     private final Position initialPosition;
+    private final Position finalPosition;
     private int pruningNumber = 200;
     private boolean useSymmetry = false;
     private final List<Position> solutions;
@@ -23,10 +24,16 @@ public class PruningSearch {
      *
      * @param initialPosition initial Position from which we will conduct the search.
      */
-    public PruningSearch(Position initialPosition)
+    public PruningSearch(Position initialPosition, Position finalPosition)
     {
         this.initialPosition = initialPosition;
+        this.finalPosition = finalPosition;
         solutions = new ArrayList<Position>();
+    }
+
+    public PruningSearch(Position initialPosition)
+    {
+        this(initialPosition, null);
     }
 
 
@@ -139,7 +146,7 @@ public class PruningSearch {
         }
 
         for(Position b : children) {
-            if(b.isFinal()) {
+            if(b.isFinal() && (finalPosition == null || b.isComplement(finalPosition))) {
                 solutions.add(b);
             }
         }
