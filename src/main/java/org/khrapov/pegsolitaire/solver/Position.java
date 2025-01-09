@@ -353,7 +353,7 @@ public class Position
         for (int x = 0; x < board.X; x++) {
             for (int y = 0; y < board.Y; y++) {
                 if (board.allowed(x, y)) {
-                    b.append(this.occupied(x, y) ? 'x' : 'o');
+                    b.append(this.occupied(x, y) ? 'o' : '.');
                 } else {
                     b.append((' '));
                 }
