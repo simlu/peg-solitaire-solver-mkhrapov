@@ -110,7 +110,7 @@ public class PruningSearchTest
     Position f = b.initialPosition(3, 3);
     PruningSearch pruningSearch = new PruningSearch(p, f);
 
-    pruningSearch.prune(121);
+    pruningSearch.prune(200);
     int solutions = pruningSearch.search();
     if (solutions < 1)
     {
