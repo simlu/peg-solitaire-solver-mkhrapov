@@ -350,8 +350,8 @@ public class Position
 
     public String toString() {
         StringBuilder b = new StringBuilder();
-        for (int x = 0; x < board.X; x++) {
-            for (int y = 0; y < board.Y; y++) {
+        for (int y = 0; y < board.Y; y++) {
+            for (int x = 0; x < board.X; x++) {
                 if (board.allowed(x, y)) {
                     b.append(this.occupied(x, y) ? 'o' : '.');
                 } else {
