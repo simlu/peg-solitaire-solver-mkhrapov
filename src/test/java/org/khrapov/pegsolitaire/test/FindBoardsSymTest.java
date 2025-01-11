@@ -5,12 +5,14 @@ import org.khrapov.pegsolitaire.solver.Board;
 import org.khrapov.pegsolitaire.solver.Position;
 import org.khrapov.pegsolitaire.solver.PruningSearch;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.khrapov.pegsolitaire.test.Util.solutionToString;
 import static org.khrapov.pegsolitaire.test.Util.toHexString;
@@ -40,6 +42,25 @@ public class FindBoardsSymTest {
         board[idx[1]][idx[0]] = 1;
     }
 
+    private void makeSymmetric(int[][] board) {
+        int w = board[0].length;
+        int h = board.length;
+        for (int x = 0; x < w; x += 1) {
+            for (int y = 0; y < h; y += 1) {
+                if (board[y][x] == 1) {
+                    board[h - y - 1][x] = 1;
+                    board[y][w - x - 1] = 1;
+                    board[h - y - 1][w - x - 1] = 1;
+
+                    board[x][y] = 1;
+                    board[x][h - y - 1] = 1;
+                    board[w - x - 1][y] = 1;
+                    board[w - x - 1][h - y - 1] = 1;
+                }
+            }
+        }
+    }
+
     private int[][] makeBoard() {
         // todo: make 9x9 and find only symmetrical boards (flip diagonally, flip vertically, flip horizontally, flip both, etc)
         int[][] board = new int[][]{
@@ -53,10 +74,12 @@ public class FindBoardsSymTest {
                 new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
                 new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        int holes = 35 + (int)Math.floor(Math.random() * 7);
+        int holes = 5 + (int)Math.floor(Math.random() * 18);
         for (int i = 0; i < holes - 1; i += 1) {
             addRandomHole(board);
         }
+
+        makeSymmetric(board);
 
         return board;
     }
@@ -89,17 +112,21 @@ public class FindBoardsSymTest {
             pruningSearch.prune(500);
             solutions = pruningSearch.search();
             if (solutions != 0) {
-                System.out.println(p);
-                System.out.println("----------------");
 
                 String result = solutionToString(p, pruningSearch.getSolution(0));
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
                 messageDigest.update(result.getBytes());
                 String stringHash = toHexString(messageDigest.digest()).substring(0, 48);
 
-                PrintWriter writer = new PrintWriter("data/" + stringHash + ".txt", "UTF-8");
-                writer.print(result);
-                writer.close();
+                long count = Arrays.stream(makeSimple(board)).filter(e -> e == 1).count();
+                String fileName = "data/" + count + "-" + stringHash + ".txt";
+                if (!new File(fileName).isFile()) {
+                    System.out.println(p);
+                    System.out.println("----------------");
+                    PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+                    writer.print(result);
+                    writer.close();
+                }
             }
         }
     }
