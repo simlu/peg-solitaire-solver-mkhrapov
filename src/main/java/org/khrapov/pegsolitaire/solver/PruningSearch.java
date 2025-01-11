@@ -78,6 +78,10 @@ public class PruningSearch {
         return solutions.get(i).getHistory();
     }
 
+    public void clearSolutions() {
+        solutions.clear();
+    }
+
 
     public Position getFinalPosition(int i)
     {

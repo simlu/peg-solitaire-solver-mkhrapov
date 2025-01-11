@@ -105,21 +105,35 @@ public class FindBoardsSymTest {
             int w = board[0].length;
             int h = board.length;
             Board b = new Board(w, h, makeSimple(board));
+            int count = b.holeCount();
+            if (count > 45) {
+                continue;
+            }
+
             Position p = b.initialPosition(w/2, h/2);
             Position f = b.initialPosition(w/2, h/2);
             PruningSearch pruningSearch = new PruningSearch(p, f);
 
-            pruningSearch.prune(500);
+            int pruneNumber = 1000;
+            pruningSearch.prune(pruneNumber);
             solutions = pruningSearch.search();
             if (solutions != 0) {
+                pruningSearch.clearSolutions();
+                int difficultyAbsolute = 0;
+                do {
+                    difficultyAbsolute += 1;
+                    pruningSearch.prune(difficultyAbsolute);
+                    solutions = pruningSearch.search();
+                } while (solutions == 0);
 
                 String result = solutionToString(p, pruningSearch.getSolution(0));
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
                 messageDigest.update(result.getBytes());
                 String stringHash = toHexString(messageDigest.digest()).substring(0, 48);
 
-                long count = Arrays.stream(makeSimple(board)).filter(e -> e == 1).count();
-                String fileName = "data/" + count + "-" + stringHash + ".txt";
+                int difficulty = (int)Math.round(difficultyAbsolute * 1000.0 / count);
+                String fileName = "data/" + difficulty + '_' + count + "_" + stringHash + ".txt";
+
                 if (!new File(fileName).isFile()) {
                     System.out.println(p);
                     System.out.println("----------------");

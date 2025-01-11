@@ -85,6 +85,10 @@ public final class Board
         return position;
     }
 
+    public int holeCount() {
+        return holes.length;
+    }
+
 
     boolean allowed(int i)
     {
