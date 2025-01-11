@@ -114,7 +114,7 @@ public class FindBoardsSymTest {
             Position f = b.initialPosition(w/2, h/2);
             PruningSearch pruningSearch = new PruningSearch(p, f);
 
-            int pruneNumber = 1000;
+            int pruneNumber = 5000;
             pruningSearch.prune(pruneNumber);
             solutions = pruningSearch.search();
             if (solutions != 0) {
@@ -131,8 +131,8 @@ public class FindBoardsSymTest {
                 messageDigest.update(result.getBytes());
                 String stringHash = toHexString(messageDigest.digest()).substring(0, 48);
 
-                int difficulty = (int)Math.round(difficultyAbsolute * 1000.0 / count);
-                String fileName = "data/" + difficulty + '_' + count + "_" + stringHash + ".txt";
+                int difficulty = (int)Math.round(difficultyAbsolute * 100.0 / count);
+                String fileName = "data/" + difficulty + '_' + difficultyAbsolute + '_' + count + "_" + stringHash + ".txt";
 
                 if (!new File(fileName).isFile()) {
                     System.out.println(p);
