@@ -2,7 +2,6 @@ package org.khrapov.pegsolitaire.test;
 
 import org.junit.Test;
 import org.khrapov.pegsolitaire.solver.Board;
-import org.khrapov.pegsolitaire.solver.Move;
 import org.khrapov.pegsolitaire.solver.Position;
 import org.khrapov.pegsolitaire.solver.PruningSearch;
 
@@ -16,71 +15,75 @@ import java.util.ArrayList;
 import static org.khrapov.pegsolitaire.test.Util.solutionToString;
 import static org.khrapov.pegsolitaire.test.Util.toHexString;
 
-public class FindBoardsTest {
+public class FindBoardsSymTest {
 
-    private void addRandomHole(int[] board, int w, int h) {
-        ArrayList<Integer> possible = new ArrayList<>();
+    private void addRandomHole(int[][] board) {
+        ArrayList<int[]> possible = new ArrayList<>();
+        int w = board[0].length;
+        int h = board.length;
         for (int x = 0; x < w; x += 1) {
             for (int y = 0; y < h; y += 1) {
-                int idx = y * w + x;
                 if (
-                    board[idx] == 0 && (
-                        (idx - 1 >= 0 && board[idx - 1] == 1)
-                        || (idx + 1 < board.length && board[idx + 1] == 1)
-                        || (idx - w >= 0 && board[idx - w] == 1)
-                        || (idx + w < board.length && board[idx + w] == 1)
+                    board[y][x] == 0 && (
+                        (x - 1 >= 0 && board[y][x - 1] == 1)
+                        || (x + 1 < w && board[y][x + 1] == 1)
+                        || (y - 1 >= 0 && board[y - 1][x] == 1)
+                        || (y + 1 < h && board[y + 1][x] == 1)
                     )
                 ) {
-                    possible.add(idx);
+                    possible.add(new int[] { x, y });
                 }
             }
         }
         int selected = (int) Math.floor(Math.random() * possible.size());
-        board[possible.get(selected)] = 1;
+        int[] idx = possible.get(selected);
+        board[idx[1]][idx[0]] = 1;
     }
 
-    private int[] makeBoard(int w, int h) {
-        int[] board = new int[]{
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
+    private int[][] makeBoard() {
+        // todo: make 9x9 and find only symmetrical boards (flip diagonally, flip vertically, flip horizontally, flip both, etc)
+        int[][] board = new int[][]{
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 1, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        // random start peg
-        board[(int)Math.floor(Math.random() * board.length)] = 1;
         int holes = 35 + (int)Math.floor(Math.random() * 7);
         for (int i = 0; i < holes - 1; i += 1) {
-            addRandomHole(board, w, h);
+            addRandomHole(board);
         }
+
         return board;
     }
 
-    private int[] getStart(int w, int h, int[] board) {
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int idx = 0; idx < board.length; idx += 1) {
-            if (board[idx] == 1) {
-                list.add(idx);
+    private int[] makeSimple(int[][] board) {
+        int h = board.length;
+        int w = board[0].length;
+        int[] result = new int[w * h];
+        for (int y = 0; y < h; y += 1) {
+            for (int x = 0; x < w; x += 1) {
+                int idx = y * w + x;
+                result[idx] = board[y][x];
             }
         }
-        int selected = list.get((int)Math.floor(Math.random() * list.size()));
-        return new int[] { selected % w, selected / h };
+        return result;
     }
 
     @Test
     public void findSolvableBoards() throws NoSuchAlgorithmException, FileNotFoundException, UnsupportedEncodingException {
         int solutions = 0;
         while (true) {
-            int w = 8;
-            int h = 8;
-            int[] board = makeBoard(w, h);
-            int[] start = getStart(w, h, board);
-            Board b = new Board(w, h, board);
-            Position p = b.initialPosition(start[0], start[1]);
-            Position f = b.initialPosition(start[0], start[1]);
+            int[][] board = makeBoard();
+            int w = board[0].length;
+            int h = board.length;
+            Board b = new Board(w, h, makeSimple(board));
+            Position p = b.initialPosition(w/2, h/2);
+            Position f = b.initialPosition(w/2, h/2);
             PruningSearch pruningSearch = new PruningSearch(p, f);
 
             pruningSearch.prune(500);
