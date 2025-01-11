@@ -105,7 +105,7 @@ public class FindBoardsSymTest {
             int w = board[0].length;
             int h = board.length;
             Board b = new Board(w, h, makeSimple(board));
-            int count = b.holeCount();
+            int count = b.holeCount;
             if (count > 45) {
                 continue;
             }

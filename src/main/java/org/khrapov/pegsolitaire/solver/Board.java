@@ -1,6 +1,8 @@
 package org.khrapov.pegsolitaire.solver;
 
 
+import java.util.Arrays;
+
 /**
  * Board represents the geometry of a particular Peg Solitaire board.
  * The representation is a rectangular array X by Y in dimension. The places
@@ -11,6 +13,7 @@ public final class Board
 {
     public final int X;
     public final int Y;
+    public final int holeCount;
 
     // symmetry
     final boolean verticalFlip;
@@ -41,6 +44,7 @@ public final class Board
 
         X = x;
         Y = y;
+        holeCount = (int) Arrays.stream(holes).filter((h) -> h == 1).count();
 
         this.holes = new boolean[x * y];
 
@@ -83,10 +87,6 @@ public final class Board
         Position position = new Position(this);
         position.set(x, y, false);
         return position;
-    }
-
-    public int holeCount() {
-        return holes.length;
     }
 
 
