@@ -9,13 +9,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import static org.khrapov.pegsolitaire.test.Util.solutionToString;
-import static org.khrapov.pegsolitaire.test.Util.toHexString;
+import static org.khrapov.pegsolitaire.test.Util.*;
 
 public class FindBoardsSymTest {
 
@@ -113,9 +110,17 @@ public class FindBoardsSymTest {
             Position p = b.initialPosition(w/2, h/2);
             Position f = b.initialPosition(w/2, h/2);
             PruningSearch pruningSearch = new PruningSearch(p, f);
-
-            int pruneNumber = 5000;
+            int pruneNumber = 30000;
             pruningSearch.prune(pruneNumber);
+
+            File checkFile = new File("check/" +pruneNumber + "_" + hash(p.toString()) + ".txt");
+            if (checkFile.isFile()) {
+                continue;
+            }
+            PrintWriter checkWriter = new PrintWriter(checkFile, "UTF-8");
+            checkWriter.print(p);
+            checkWriter.close();
+
             solutions = pruningSearch.search();
             if (solutions != 0) {
                 pruningSearch.clearSolutions();
@@ -127,9 +132,7 @@ public class FindBoardsSymTest {
                 } while (solutions == 0);
 
                 String result = solutionToString(p, pruningSearch.getSolution(0));
-                MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-                messageDigest.update(result.getBytes());
-                String stringHash = toHexString(messageDigest.digest()).substring(0, 48);
+                String stringHash = hash(result);
 
                 int difficulty = (int)Math.round(difficultyAbsolute * 100.0 / count);
                 String fileName = "data/" + difficulty + '_' + difficultyAbsolute + '_' + count + "_" + stringHash + ".txt";

@@ -3,9 +3,18 @@ package org.khrapov.pegsolitaire.test;
 import org.khrapov.pegsolitaire.solver.Move;
 import org.khrapov.pegsolitaire.solver.Position;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class Util {
+
+    public static String hash(String s) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(s.getBytes());
+        return toHexString(messageDigest.digest()).substring(0, 48);
+    }
+
     public static String toHexString(byte[] bytes) {
         StringBuilder hexString = new StringBuilder();
 
