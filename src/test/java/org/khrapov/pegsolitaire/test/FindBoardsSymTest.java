@@ -113,13 +113,11 @@ public class FindBoardsSymTest {
             int pruneNumber = 30000;
             pruningSearch.prune(pruneNumber);
 
-            File checkFile = new File("check/" +pruneNumber + "_" + hash(p.toString()) + ".txt");
-            if (checkFile.isFile()) {
+            String checkFile = "check/" +pruneNumber + "_" + hash(p.toString()) + ".txt";
+            if (new File(checkFile).isFile()) {
                 continue;
             }
-            PrintWriter checkWriter = new PrintWriter(checkFile, "UTF-8");
-            checkWriter.print(p);
-            checkWriter.close();
+            write(checkFile, p.toString());
 
             solutions = pruningSearch.search();
             if (solutions != 0) {
@@ -140,9 +138,7 @@ public class FindBoardsSymTest {
                 if (!new File(fileName).isFile()) {
                     System.out.println(p);
                     System.out.println("----------------");
-                    PrintWriter writer = new PrintWriter(fileName, "UTF-8");
-                    writer.print(result);
-                    writer.close();
+                    write(fileName, result);
                 }
             }
         }

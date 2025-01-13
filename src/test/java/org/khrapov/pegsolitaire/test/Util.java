@@ -3,6 +3,9 @@ package org.khrapov.pegsolitaire.test;
 import org.khrapov.pegsolitaire.solver.Move;
 import org.khrapov.pegsolitaire.solver.Position;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -13,6 +16,12 @@ public class Util {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
         messageDigest.update(s.getBytes());
         return toHexString(messageDigest.digest()).substring(0, 48);
+    }
+
+    public static void write(String fileName, String content) throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+        writer.print(content);
+        writer.close();
     }
 
     public static String toHexString(byte[] bytes) {
