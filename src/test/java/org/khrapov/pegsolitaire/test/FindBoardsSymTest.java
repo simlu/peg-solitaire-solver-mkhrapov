@@ -117,7 +117,6 @@ public class FindBoardsSymTest {
             if (new File(checkFile).isFile()) {
                 continue;
             }
-            write(checkFile, p.toString());
 
             solutions = pruningSearch.search();
             if (solutions != 0) {
@@ -141,6 +140,8 @@ public class FindBoardsSymTest {
                     write(fileName, result);
                 }
             }
+
+            write(checkFile, p.toString());
         }
     }
 }
