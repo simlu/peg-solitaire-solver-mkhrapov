@@ -7,7 +7,6 @@ import org.khrapov.pegsolitaire.solver.PruningSearch;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -61,15 +60,17 @@ public class FindBoardsSymTest {
     private int[][] makeBoard() {
         // todo: make 9x9 and find only symmetrical boards (flip diagonally, flip vertically, flip horizontally, flip both, etc)
         int[][] board = new int[][]{
-                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[] {0, 0, 0, 0, 1, 0, 0, 0, 0},
-                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0}
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
         int holes = 5 + (int)Math.floor(Math.random() * 18);
         for (int i = 0; i < holes - 1; i += 1) {
@@ -103,7 +104,7 @@ public class FindBoardsSymTest {
             int h = board.length;
             Board b = new Board(w, h, makeSimple(board));
             int count = b.holeCount;
-            if (count > 45) {
+            if (count > 49) {
                 continue;
             }
 
